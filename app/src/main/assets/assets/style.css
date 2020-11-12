@@ -1,0 +1,12 @@
+@font-face {
+	font-family: 'app-font';
+	src: url(app-font.ttf);
+}
+
+html, body {
+	font-family: app-font !important;
+}
+
+.app-title {
+	font-weight: normal;
+}
