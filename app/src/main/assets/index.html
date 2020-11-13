@@ -11,10 +11,13 @@
 		<link rel="stylesheet" href="assets/style.css">
 		<link rel="stylesheet" href="assets/bulma.min.css">
 		<link rel="stylesheet" href="assets/line-awesome/css/line-awesome.min.css">
+
+		<script type="text/javascript" src="scripts/Data.js"></script>
+		<script type="text/javascript" src="scripts/main.js"></script>
 	</head>
 
 	<body>
-		<section class="hero is-light is-bold">
+		<section class="hero is-light is-bold mb-3">
 			<div class="hero-body">
 				<div class="container has-text-centered">
 					<h1 class="app-title is-size-1">
@@ -23,6 +26,106 @@
 				</div>
 			</div>
 		</section>
+
+		<section class="section pb-0 mb-0" id="empty-start-message">
+			<h2 class="has-text-centered is-size-3 has-text-grey">
+				Welcome! To get started, tap the "<i class="las la-plus-circle"></i>".
+			</h2>
+		</section>
+
+		<section class="section" id="tracker-container">
+			<div class="box">
+				<article class="media is-size-3">
+					<div class="media-left">
+						<i class="las la-cookie-bite"></i> Sugar
+					</div>
+					<div class="media-content"></div>
+					<div class="media-right">
+						14 hours
+					</div>
+				</article>
+
+				<progress class="progress is-success is-large  mb-0 mt-0" value="60" max="100" data-label="1 Day"></progress>
+				<p class="has-text-centered has-text-grey mt-0 pt-0 is-size-4">Next goal: 1 day</p>
+
+				<p class="has-text-centered mt-4">
+					<i class="las la-edit la-3x"></i>
+					<i class="las la-chevron-circle-down la-3x"></i>
+					<i class="las la-chevron-circle-up la-3x"></i>
+				</p>
+			</div>
+		</section>
+
+		<section class="section pt-1" id="add-tracker-button-section">
+			<h1 class="has-text-centered is-size-1 has-text-grey">
+				<i class="las la-plus-circle la-3x" id="add-tracker-button"></i>
+			</h1>
+		</section>
+
+		<div class="modal" style="display: block;" id="tracker-editor">
+			<div class="modal-background"></div>
+			<div class="modal-card mt-3" style="width: auto;">
+				<header class="modal-card-head">
+					<p class="modal-card-title" id="tracker-editor-title">Edit TRACKER</p>
+				</header>
+				<section class="modal-card-body">
+					<div class="field">
+						<label class="label">Name</label>
+						<div class="control">
+							<input class="input" type="text" placeholder="Tracker name" id="tracker-editor-edit-name">
+						</div>
+					</div>
+
+					<div class="field">
+						<label class="label">Type</label>
+						<div class="control has-icons-left">
+							<div class="select is-fullwidth">
+								<select id="tracker-editor-edit-type">
+								</select>
+							</div>
+							<div class="icon is-left" id="tracker-editor-type-icons">
+							</div>
+						</div>
+					</div>
+
+					<div class="field">
+						<label class="label">Last Used</label>
+						<div class="control">
+							<input class="input" type="date" id="tracker-editor-edit-date">
+						</div>
+					</div>
+					<div class="field">
+						<div class="control">
+							<input class="input" type="time" id="tracker-editor-edit-date-time">
+						</div>
+					</div>
+
+					<div class="field">
+						<label class="label">Weekly Money Spent</label>
+						<div class="control">
+							<input class="input" type="number" placeholder="0" min=0 id="tracker-editor-edit-spent-money">
+						</div>
+					</div>
+
+					<div class="field">
+						<label class="label">Weekly Hours Spent</label>
+						<div class="control">
+							<input class="input" type="number" placeholder="0" min=0 id="tracker-editor-edit-spent-time">
+						</div>
+					</div>
+
+					<div class="has-text-centered mt-4" id="tracker-editor-buttons-main">
+						<i class="las la-trash-alt la-3x"></i>
+						<i class="las la-save la-3x"></i>
+					</div>
+					<div class="has-text-centered mt-4" id="tracker-editor-buttons-delete">
+						<h3 class="is-size-3">Delete?</h3>
+						<i class="las la-check la-3x"></i>
+						<i class="las la-times la-3x"></i>
+					</div>
+				</section>
+			</div>
+		</div>
     </body>
 
 </html>

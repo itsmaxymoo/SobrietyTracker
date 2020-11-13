@@ -5,8 +5,27 @@
 
 html, body {
 	font-family: app-font !important;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .app-title {
 	font-weight: normal;
+}
+
+.main-base {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+}
+
+.main-edit-tracker {
+	position: relative;
+	z-index: 1;
+	overflow: auto;
 }
