@@ -1,2 +1,2 @@
-app/src/main/assets/assets/bulma.min.css linguist-vendored
-app/src/main/assets/assets/line-awesome/ linguist-vendored
+app/src/main/assets/assets/bulma.min.css linguist-vendored=true
+app/src/main/assets/assets/line-awesome/* linguist-vendored=true
