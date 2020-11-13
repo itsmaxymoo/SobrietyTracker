@@ -58,21 +58,23 @@
 
 		<section class="section pt-1" id="add-tracker-button-section">
 			<h1 class="has-text-centered is-size-1 has-text-grey">
-				<i class="las la-plus-circle la-3x" id="add-tracker-button"></i>
+				<i class="las la-plus-circle la-3x" id="add-tracker-button" onclick="GUI.createNewTracker();"></i>
 			</h1>
 		</section>
 
 		<div class="modal" style="display: block;" id="tracker-editor">
+			<data id="tracker-editor-id"></data>
+
 			<div class="modal-background"></div>
 			<div class="modal-card mt-3" style="width: auto;">
 				<header class="modal-card-head">
-					<p class="modal-card-title" id="tracker-editor-title">Edit TRACKER</p>
+					<p class="modal-card-title">Edit <span id="tracker-editor-title">TRACKER</span></p>
 				</header>
 				<section class="modal-card-body">
 					<div class="field">
 						<label class="label">Name</label>
 						<div class="control">
-							<input class="input" type="text" placeholder="Tracker name" id="tracker-editor-edit-name">
+							<input class="input" type="text" placeholder="Tracker name" id="tracker-editor-edit-name" onfocusout="GUI.trackerEditorNameUpdate();">
 						</div>
 					</div>
 
@@ -80,11 +82,12 @@
 						<label class="label">Type</label>
 						<div class="control has-icons-left">
 							<div class="select is-fullwidth">
-								<select id="tracker-editor-edit-type">
+								<select id="tracker-editor-edit-type" onchange="GUI.trackerEditorTypeIconUpdate();">
 								</select>
 							</div>
-							<div class="icon is-left" id="tracker-editor-type-icons">
-							</div>
+							<span class="icon has-text-grey-dark is-left">
+								<i id="tracker-editor-type-icon"></i>
+							</span>
 						</div>
 					</div>
 
@@ -115,13 +118,13 @@
 					</div>
 
 					<div class="has-text-centered mt-4" id="tracker-editor-buttons-main">
-						<i class="las la-trash-alt la-3x"></i>
+						<i class="las la-trash-alt la-3x" onclick="GUI.trackerEditorDelete();"></i>
 						<i class="las la-save la-3x"></i>
 					</div>
 					<div class="has-text-centered mt-4" id="tracker-editor-buttons-delete">
 						<h3 class="is-size-3">Delete?</h3>
-						<i class="las la-check la-3x"></i>
-						<i class="las la-times la-3x"></i>
+						<i class="las la-check la-3x" onclick="GUI.trackerEditorDeleteConfirm();"></i>
+						<i class="las la-times la-3x" onclick="GUI.trackerEditorDeleteCancel();"></i>
 					</div>
 				</section>
 			</div>
