@@ -125,7 +125,7 @@ class GUI {
 	}
 
 	static trackerEditorDeleteConfirm() {
-		Data.deleteTracker(parseInt(elements.trackerEditorId.value));
+		Data.deleteTracker(elements.trackerEditorId.value);
 		hideElement(elements.trackerEditor);
 		showElement(elements.trackerEditorButtonsMain);
 		hideElement(elements.trackerEditorButtonsDelete);

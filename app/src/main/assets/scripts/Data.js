@@ -45,6 +45,11 @@ class Data{
 		Data.trackers = JSON.parse(localStorage.getItem('trackers'));
 		if(Data.trackers === null) Data.trackers = [];
 
+		// When we load the trackers, their dates are strings, and must be converted to Dates.
+		for(var i = 0; i < Data.trackers.length; i++) {
+			Data.trackers[i].date = new Date(Data.trackers[i].date);
+		}
+
 		return true;
 	}
 
@@ -59,14 +64,14 @@ class Data{
 	}
 
 	static deleteTracker(id) {
-		Data.trackers.splice(id, 1);
+		Data.trackers.splice(parseInt(id), 1);
 	}
 
 	static html2Date(date, time) {
 		date = new Date(date + " " + time);
 		var now = new Date();
 
-		if(date instanceof Date && !isNaN(date) && date <= now) {
+		if(date instanceof Date && !isNaN(date) && date <= now && date.getFullYear() >= 1900) {
 			date = date;
 		}
 		else {
@@ -77,11 +82,19 @@ class Data{
 	}
 
 	static date2HTML(date) {
-		date = new Date(date);
+		// Add padding zero to time values if needed.
+		var monthNum = date.getMonth() + 1;
+		monthNum = (monthNum < 10 ? '0' : '') + monthNum;
+		var dayNum = date.getDate();
+		dayNum = (dayNum < 10 ? '0' : '') + dayNum;
+		var hrNum = date.getHours();
+		hrNum = (hrNum< 10 ? '0' : '') + hrNum;
+		var minNum = date.getMinutes();
+		minNum = (minNum < 10 ? '0' : '') + minNum;
 
 		return [
-			date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
-			date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
+			date.getFullYear() + "-" + monthNum + "-" + dayNum,
+			hrNum + ":" + minNum
 		];
 	}
 }
