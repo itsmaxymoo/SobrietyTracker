@@ -18,8 +18,6 @@ class elements {
 // Run once on app startup.
 document.addEventListener('contextmenu', event => event.preventDefault());
 window.onload = function() {
-	Data.load();
-
 	// Element references.
 	elements.emptyStartMessage = document.getElementById('empty-start-message');
 	elements.trackerEditor = document.getElementById('tracker-editor');
@@ -52,17 +50,22 @@ window.onload = function() {
 }
 
 // Runs multiple times.
-function render(){
-	if(Data.trackers.length > 0){
+function render() {
+	Data.load();
+
+	if(Data.trackers.length > 0) {
 		hideElement(elements.emptyStartMessage);
+	}
+	else {
+		showElement(elements.emptyStartMessage);
 	}
 }
 
-function hideElement(e){
+function hideElement(e) {
 	e.style.display = 'none';
 }
 
-function showElement(e){
+function showElement(e) {
 	e.style.display = 'block';
 }
 
@@ -70,6 +73,13 @@ function showElement(e){
 class GUI {
 	static createNewTracker() {
 		var trackerId = Data.createNewTracker();
+
+		GUI.loadTrackerEditor(trackerId);
+
+		GUI.trackerEditorTypeIconUpdate();
+	}
+
+	static loadTrackerEditor(trackerId){
 		elements.trackerEditorId.value = trackerId;
 		var tracker = Data.trackers[trackerId];
 		showElement(elements.trackerEditor);
@@ -77,12 +87,10 @@ class GUI {
 		elements.trackerEditorTitle.innerHTML = tracker.name;
 		elements.trackerEditorEditName.value = tracker.name;
 		elements.trackerEditorEditType.value = tracker.profile;
-		elements.trackerEditorEditDate.value = tracker.getDateHTML()[0];
-		elements.trackerEditorEditDateTime.value = tracker.getDateHTML()[1];
+		elements.trackerEditorEditDate.value = Data.date2HTML(tracker.date)[0];
+		elements.trackerEditorEditDateTime.value = Data.date2HTML(tracker.date)[1];
 		elements.trackerEditorEditSpentMoney.value = tracker.spentMoney;
 		elements.trackerEditorEditSpentTime.value = tracker.spentTime;
-
-		GUI.trackerEditorTypeIconUpdate();
 	}
 
 	static trackerEditorNameUpdate() {
@@ -117,11 +125,35 @@ class GUI {
 	}
 
 	static trackerEditorDeleteConfirm() {
-		Data.deleteTracker(elements.trackerEditorId.value);
+		Data.deleteTracker(parseInt(elements.trackerEditorId.value));
 		hideElement(elements.trackerEditor);
 		showElement(elements.trackerEditorButtonsMain);
 		hideElement(elements.trackerEditorButtonsDelete);
 
+		Data.write();
+
+		render();
+
 		GUI.trackerEditorSetDisabled(false);
+	}
+
+	static trackerEditorSave() {
+		var trackerId = elements.trackerEditorId.value;
+		var tracker = Data.trackers[trackerId];
+		
+		tracker.name = elements.trackerEditorEditName.value;
+		tracker.profile = elements.trackerEditorEditType.value;
+		tracker.date = Data.html2Date(
+			elements.trackerEditorEditDate.value,
+			elements.trackerEditorEditDateTime.value
+		);
+		tracker.spentMoney = elements.trackerEditorEditSpentMoney.value;
+		tracker.spentTime = elements.trackerEditorEditSpentTime.value;
+
+		Data.write();
+
+		hideElement(elements.trackerEditor);
+
+		render();
 	}
 }

@@ -21,25 +21,6 @@ class Tracker {
 		this.spentMoney = spentMoney;
 		this.spentTime = spentTime;
 	}
-
-	setDateHTML(date, time) {
-		date = new Date(date + " " + time);
-		now = new Date();
-
-		if(date instanceof Date && !isNaN(date) && date <= now) {
-			this.date = date;
-		}
-		else {
-			this.date = now;
-		}
-	}
-
-	getDateHTML() {
-		return [
-			this.date.getFullYear() + "-" + (this.date.getMonth() + 1) + "-" + this.date.getDate(),
-			this.date.getHours() + ":" + this.date.getMinutes()
-		];
-	}
 }
 
 class Data{
@@ -79,5 +60,28 @@ class Data{
 
 	static deleteTracker(id) {
 		Data.trackers.splice(id, 1);
+	}
+
+	static html2Date(date, time) {
+		date = new Date(date + " " + time);
+		var now = new Date();
+
+		if(date instanceof Date && !isNaN(date) && date <= now) {
+			date = date;
+		}
+		else {
+			date = now;
+		}
+
+		return date;
+	}
+
+	static date2HTML(date) {
+		date = new Date(date);
+
+		return [
+			date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
+			date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
+		];
 	}
 }
