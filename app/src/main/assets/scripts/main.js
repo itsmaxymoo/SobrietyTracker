@@ -87,8 +87,8 @@ class GUI {
 		elements.trackerEditorTitle.innerHTML = tracker.name;
 		elements.trackerEditorEditName.value = tracker.name;
 		elements.trackerEditorEditType.value = tracker.profile;
-		elements.trackerEditorEditDate.value = Data.date2HTML(tracker.date)[0];
-		elements.trackerEditorEditDateTime.value = Data.date2HTML(tracker.date)[1];
+		elements.trackerEditorEditDate.value = Tracker.date2HTML(tracker.date)[0];
+		elements.trackerEditorEditDateTime.value = Tracker.date2HTML(tracker.date)[1];
 		elements.trackerEditorEditSpentMoney.value = tracker.spentMoney;
 		elements.trackerEditorEditSpentTime.value = tracker.spentTime;
 	}
@@ -143,7 +143,7 @@ class GUI {
 		
 		tracker.name = elements.trackerEditorEditName.value;
 		tracker.profile = elements.trackerEditorEditType.value;
-		tracker.date = Data.html2Date(
+		tracker.date = Tracker.html2Date(
 			elements.trackerEditorEditDate.value,
 			elements.trackerEditorEditDateTime.value
 		);

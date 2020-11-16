@@ -21,6 +21,37 @@ class Tracker {
 		this.spentMoney = spentMoney;
 		this.spentTime = spentTime;
 	}
+
+	static html2Date(date, time) {
+		date = new Date(date + " " + time);
+		var now = new Date();
+
+		if(date instanceof Date && !isNaN(date) && date <= now && date.getFullYear() >= 1900) {
+			date = date;
+		}
+		else {
+			date = now;
+		}
+
+		return date;
+	}
+
+	static date2HTML(date) {
+		// Add padding zero to time values if needed.
+		var monthNum = date.getMonth() + 1;
+		monthNum = (monthNum < 10 ? '0' : '') + monthNum;
+		var dayNum = date.getDate();
+		dayNum = (dayNum < 10 ? '0' : '') + dayNum;
+		var hrNum = date.getHours();
+		hrNum = (hrNum< 10 ? '0' : '') + hrNum;
+		var minNum = date.getMinutes();
+		minNum = (minNum < 10 ? '0' : '') + minNum;
+
+		return [
+			date.getFullYear() + "-" + monthNum + "-" + dayNum,
+			hrNum + ":" + minNum
+		];
+	}
 }
 
 class Data{
@@ -65,36 +96,5 @@ class Data{
 
 	static deleteTracker(id) {
 		Data.trackers.splice(parseInt(id), 1);
-	}
-
-	static html2Date(date, time) {
-		date = new Date(date + " " + time);
-		var now = new Date();
-
-		if(date instanceof Date && !isNaN(date) && date <= now && date.getFullYear() >= 1900) {
-			date = date;
-		}
-		else {
-			date = now;
-		}
-
-		return date;
-	}
-
-	static date2HTML(date) {
-		// Add padding zero to time values if needed.
-		var monthNum = date.getMonth() + 1;
-		monthNum = (monthNum < 10 ? '0' : '') + monthNum;
-		var dayNum = date.getDate();
-		dayNum = (dayNum < 10 ? '0' : '') + dayNum;
-		var hrNum = date.getHours();
-		hrNum = (hrNum< 10 ? '0' : '') + hrNum;
-		var minNum = date.getMinutes();
-		minNum = (minNum < 10 ? '0' : '') + minNum;
-
-		return [
-			date.getFullYear() + "-" + monthNum + "-" + dayNum,
-			hrNum + ":" + minNum
-		];
 	}
 }
