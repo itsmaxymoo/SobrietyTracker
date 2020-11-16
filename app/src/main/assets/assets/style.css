@@ -29,3 +29,7 @@ html, body {
 	z-index: 1;
 	overflow: auto;
 }
+
+.text-no-line-break {
+	white-space: nowrap;
+}

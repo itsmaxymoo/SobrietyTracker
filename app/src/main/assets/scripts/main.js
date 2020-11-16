@@ -1,6 +1,7 @@
 // I wish JS had structs, but this will have to do for now.
 class elements {
 	static emptyStartMessage;
+	static trackerContainer;
 	static trackerEditor;
 	static trackerEditorId;
 	static trackerEditorTitle;
@@ -20,6 +21,7 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 window.onload = function() {
 	// Element references.
 	elements.emptyStartMessage = document.getElementById('empty-start-message');
+	elements.trackerContainer = document.getElementById('tracker-container');
 	elements.trackerEditor = document.getElementById('tracker-editor');
 	elements.trackerEditorId = document.getElementById('tracker-editor-id');
 	elements.trackerEditorTitle = document.getElementById('tracker-editor-title');
@@ -51,10 +53,75 @@ window.onload = function() {
 
 // Runs multiple times.
 function render() {
+	elements.trackerContainer.innerHTML = '';
+
 	Data.load();
 
 	if(Data.trackers.length > 0) {
 		hideElement(elements.emptyStartMessage);
+
+		// Construct trackers.
+		for(var id = 0; id < Data.trackers.length; id++) {
+			var tracker = Data.trackers[id];
+			var html = `
+				<div class="box">
+					<article class="media is-size-3">
+						<div class="media-left">
+							<i class="${Data.trackerProfiles[tracker.profile].icon}"></i>&nbsp;${tracker.name}
+						</div>
+						<div class="media-content"></div>
+						<div class="media-right">
+							${Tracker.getSoberTime(tracker)}
+						</div>
+					</article>
+
+					<progress class="progress is-success is-large  mb-0 mt-0" value="${Tracker.getGoalProgress(tracker)}" max="1" data-label="1 Day"></progress>
+					<p class="has-text-centered has-text-grey mt-0 pt-0 is-size-4">Next goal: ${Tracker.getNextGoal(tracker)}</p>
+			`;
+
+			if(tracker.spentMoney + tracker.spentTime > 0) {
+				html += `
+					<div class="box">
+				`;
+
+				if(tracker.spentMoney > 0) {
+					html += `
+						<div class="field">
+							<label class="label">Money Saved</label>
+							<div class="control">
+								<span class="is-size-4">$1,000</span>
+							</div>
+						</div>
+					`;
+				}
+
+				if(tracker.spentTime > 0) {
+					html += `
+						<div class="field">
+							<label class="label">Time Saved</label>
+							<div class="control">
+								<span class="is-size-4">1 hour(s)</span>
+							</div>
+						</div>
+					`;
+				}
+
+				html += `
+					</div>
+				`;
+			}
+
+			html += `
+					<p class="has-text-centered mt-4">
+						<i class="las la-edit la-3x" onclick="GUI.loadTrackerEditor(${id});"></i>
+						<i class="las la-chevron-circle-down la-3x" onclick="GUI.moveTracker(${id}, 1);"></i>
+						<i class="las la-chevron-circle-up la-3x" onclick="GUI.moveTracker(${id}, -1);"></i>
+					</p>
+				</div>
+			`;
+
+			elements.trackerContainer.innerHTML += html;
+		}
 	}
 	else {
 		showElement(elements.emptyStartMessage);
@@ -77,6 +144,16 @@ class GUI {
 		GUI.loadTrackerEditor(trackerId);
 
 		GUI.trackerEditorTypeIconUpdate();
+	}
+
+	static moveTracker(id, direction) {
+		if(Data.moveTracker(id, direction)) {
+			render();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	static loadTrackerEditor(trackerId){

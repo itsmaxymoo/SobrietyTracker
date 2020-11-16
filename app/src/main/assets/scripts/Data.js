@@ -52,6 +52,31 @@ class Tracker {
 			hrNum + ":" + minNum
 		];
 	}
+
+	static getSoberTime(tracker) {
+		//TODO: THIS IS A PLACEHOLDER
+		return '13 hours';
+	}
+
+	static getNextGoal(tracker) {
+		//TODO: THIS IS A PLACEHOLDER
+		return '1 day';
+	}
+
+	static getGoalProgress(tracker) {
+		//TODO: THIS IS A PLACEHOLDER
+		return 0.6;
+	}
+
+	static getSpentMoney(tracker) {
+		//TODO: THIS IS A PLACEHOLDER
+		return '$1,000';
+	}
+
+	static getSpentTime(tracker) {
+		//TODO: THIS IS A PLACEHOLDER
+		return '1 hour';
+	}
 }
 
 class Data{
@@ -96,5 +121,20 @@ class Data{
 
 	static deleteTracker(id) {
 		Data.trackers.splice(parseInt(id), 1);
+	}
+
+	static moveTracker(id, direction) {
+		if(id + direction >= 0 && id + direction < Data.trackers.length) {
+			var old = Data.trackers[id + direction];
+			Data.trackers[id + direction] = Data.trackers[id];
+			Data.trackers[id] = old;
+
+			Data.write();
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
