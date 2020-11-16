@@ -53,29 +53,99 @@ class Tracker {
 		];
 	}
 
+	static hoursToTimeString(hours) {
+		var breakpoints = [
+			{hr: 24, name: 'Day'},
+			{hr: 168, name: 'Week'},
+			{hr: 730.5, name: 'Month'}
+		];
+
+		var breakpoint;
+
+		for(var b in breakpoints.reverse()) {
+			if(hours >= breakpoints[b].hr) {
+				hours /= breakpoints[b].hr;
+				breakpoint = breakpoints[b];
+
+				break;
+			}
+		}
+
+		// If the breakpoint is null, the elapsed time is less than 1 day and shouldn't be divided.
+		if(breakpoint === undefined) breakpoint = {name: 'Hour'};
+
+		// Add "s" to plural numbers.
+		hours = (Math.round(hours * 10) / 10);
+		if(hours != 1) breakpoint.name += 's';
+
+		return hours + ' ' + breakpoint.name;
+	}
+
+	static getHoursFromStart(tracker) {
+		return Math.abs(Date.now() - tracker.date) / (60*60*1000);
+	}
+
 	static getSoberTime(tracker) {
-		//TODO: THIS IS A PLACEHOLDER
-		return '13 hours';
+		return Tracker.hoursToTimeString(Tracker.getHoursFromStart(tracker));
 	}
 
 	static getNextGoal(tracker) {
-		//TODO: THIS IS A PLACEHOLDER
-		return '1 day';
+		var goals = [
+			6,
+			12,
+			24,
+			72,
+			168,
+			336,
+			730.5,
+			1461,
+			2191.5,
+			4383,
+			8766,
+			17532,
+			87660,
+			Number.MAX_SAFE_INTEGER
+		];
+
+		var soberHours = Tracker.getHoursFromStart(tracker);
+		var goal = goals[0];
+
+		for(var g = 0; g < goals.length; g++) {
+			if(soberHours < goals[g]) break;
+
+			goal = goals[g + 1];
+		}
+
+		return goal;
+	}
+
+	static getNextGoalString(tracker) {
+		return Tracker.hoursToTimeString(Tracker.getNextGoal(tracker));
 	}
 
 	static getGoalProgress(tracker) {
-		//TODO: THIS IS A PLACEHOLDER
-		return 0.6;
+		return 1.0 * Tracker.getHoursFromStart(tracker) / Tracker.getNextGoal(tracker);
+	}
+
+	static getSpentTotal(tracker, number) {
+		return 1.0 * Tracker.getHoursFromStart(tracker) / 168 * number;
 	}
 
 	static getSpentMoney(tracker) {
-		//TODO: THIS IS A PLACEHOLDER
-		return '$1,000';
+		return new Intl.NumberFormat(
+			'en-US',
+			{
+				style: 'currency',
+				currency: 'USD'
+			}
+		)
+		.format(
+			Tracker.getSpentTotal(tracker, tracker.spentMoney)
+		);
 	}
 
 	static getSpentTime(tracker) {
-		//TODO: THIS IS A PLACEHOLDER
-		return '1 hour';
+		return Tracker.hoursToTimeString(Tracker.getSpentTotal(tracker, tracker.spentTime));
 	}
 }
 

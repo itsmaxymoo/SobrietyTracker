@@ -76,7 +76,7 @@ function render() {
 					</article>
 
 					<progress class="progress is-success is-large  mb-0 mt-0" value="${Tracker.getGoalProgress(tracker)}" max="1" data-label="1 Day"></progress>
-					<p class="has-text-centered has-text-grey mt-0 pt-0 is-size-4">Next goal: ${Tracker.getNextGoal(tracker)}</p>
+					<p class="has-text-centered has-text-grey mt-0 pt-0 is-size-4">Next goal: ${Tracker.getNextGoalString(tracker)}</p>
 			`;
 
 			if(tracker.spentMoney + tracker.spentTime > 0) {
@@ -89,7 +89,7 @@ function render() {
 						<div class="field">
 							<label class="label">Money Saved</label>
 							<div class="control">
-								<span class="is-size-4">$1,000</span>
+								<span class="is-size-4">${Tracker.getSpentMoney(tracker)}</span>
 							</div>
 						</div>
 					`;
@@ -100,7 +100,7 @@ function render() {
 						<div class="field">
 							<label class="label">Time Saved</label>
 							<div class="control">
-								<span class="is-size-4">1 hour(s)</span>
+								<span class="is-size-4">${Tracker.getSpentTime(tracker)}</span>
 							</div>
 						</div>
 					`;
