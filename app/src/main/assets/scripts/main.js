@@ -46,11 +46,6 @@ window.onload = function() {
 	}
 	elements.trackerEditorTypeIcon.className = Data.trackerProfiles[Object.keys(Data.trackerProfiles)[0]].icon;
 
-	// Hide elements to not be shown by default.
-	hideElement(elements.trackerEditorButtonsDelete);
-	hideElement(elements.trackerEditor);
-	hideElement(elements.about);
-
 	render();
 }
 
@@ -68,15 +63,14 @@ function render() {
 			var tracker = Data.trackers[id];
 			var html = `
 				<div class="box">
-					<article class="media is-size-3">
-						<div class="media-left">
+					<div class="columns is-gapless is-multiline is-size-3">
+						<div class="column">
 							<i class="${Data.trackerProfiles[tracker.profile].icon}"></i>&nbsp;${tracker.name}
 						</div>
-						<div class="media-content"></div>
-						<div class="media-right">
+						<div class="column has-text-right has-text-left-mobile">
 							${Tracker.getSoberTime(tracker)}
 						</div>
-					</article>
+					</div>
 
 					<progress class="progress is-success is-large  mb-0 mt-0" value="${Tracker.getGoalProgress(tracker)}" max="1" data-label="1 Day"></progress>
 					<p class="has-text-centered has-text-grey mt-0 pt-0 is-size-4">Next goal: ${Tracker.getNextGoalString(tracker)}</p>
@@ -136,6 +130,7 @@ function hideElement(e) {
 }
 
 function showElement(e) {
+	e.classList.remove('starts-hidden');
 	e.style.display = 'block';
 }
 

@@ -12,6 +12,12 @@ html, body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
+	overflow-x: hidden;
+}
+
+.starts-hidden {
+	display: none !important;
 }
 
 .app-title {
