@@ -14,6 +14,7 @@ class elements {
 	static trackerEditorEditSpentTime
 	static trackerEditorButtonsMain;
 	static trackedEditorButtonsDelete;
+	static about;
 }
 
 // Run once on app startup.
@@ -34,6 +35,7 @@ window.onload = function() {
 	elements.trackerEditorEditSpentTime = document.getElementById('tracker-editor-edit-spent-time');
 	elements.trackerEditorButtonsMain = document.getElementById('tracker-editor-buttons-main');
 	elements.trackerEditorButtonsDelete = document.getElementById('tracker-editor-buttons-delete');
+	elements.about = document.getElementById('about');
 
 	// Constructor tracker editor type dropdown.
 	for(key in Data.trackerProfiles){
@@ -47,6 +49,7 @@ window.onload = function() {
 	// Hide elements to not be shown by default.
 	hideElement(elements.trackerEditorButtonsDelete);
 	hideElement(elements.trackerEditor);
+	hideElement(elements.about);
 
 	render();
 }
@@ -232,5 +235,14 @@ class GUI {
 		hideElement(elements.trackerEditor);
 
 		render();
+	}
+
+	static showAbout(show) {
+		if(show) {
+			showElement(elements.about);
+		}
+		else {
+			hideElement(elements.about);
+		}
 	}
 }
