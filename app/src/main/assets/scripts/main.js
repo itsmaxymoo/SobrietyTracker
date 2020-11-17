@@ -165,6 +165,7 @@ class GUI {
 		elements.trackerEditorTitle.innerHTML = tracker.name;
 		elements.trackerEditorEditName.value = tracker.name;
 		elements.trackerEditorEditType.value = tracker.profile;
+		GUI.trackerEditorTypeIconUpdate();
 		elements.trackerEditorEditDate.value = Tracker.date2HTML(tracker.date)[0];
 		elements.trackerEditorEditDateTime.value = Tracker.date2HTML(tracker.date)[1];
 		elements.trackerEditorEditSpentMoney.value = tracker.spentMoney;
@@ -233,6 +234,15 @@ class GUI {
 		hideElement(elements.trackerEditor);
 
 		render();
+	}
+
+	static trackerEditorCancel() {
+		if(elements.trackerEditorEditName.value == 'New Addiction') {
+			GUI.trackerEditorDeleteConfirm();
+		}
+		else {
+			hideElement(elements.trackerEditor);
+		}
 	}
 
 	static showAbout(show) {
