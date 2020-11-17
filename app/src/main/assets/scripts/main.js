@@ -47,6 +47,9 @@ window.onload = function() {
 	elements.trackerEditorTypeIcon.className = Data.trackerProfiles[Object.keys(Data.trackerProfiles)[0]].icon;
 
 	render();
+
+	// Initial load done, fade in.
+	document.body.style.opacity = 1;
 }
 
 // Runs multiple times.

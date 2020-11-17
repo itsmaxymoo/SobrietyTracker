@@ -16,6 +16,11 @@ html, body {
 	overflow-x: hidden;
 }
 
+body {
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
 .starts-hidden {
 	display: none !important;
 }
