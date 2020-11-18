@@ -157,10 +157,11 @@ class GUI {
 		return false;
 	}
 
-	static loadTrackerEditor(trackerId){
+	static loadTrackerEditor(trackerId) {
 		elements.trackerEditorId.value = trackerId;
 		var tracker = Data.trackers[trackerId];
 		showElement(elements.trackerEditor);
+		GUI.setScrollEnabled(false);
 
 		elements.trackerEditorTitle.innerHTML = tracker.name;
 		elements.trackerEditorEditName.value = tracker.name;
@@ -170,6 +171,11 @@ class GUI {
 		elements.trackerEditorEditDateTime.value = Tracker.date2HTML(tracker.date)[1];
 		elements.trackerEditorEditSpentMoney.value = tracker.spentMoney;
 		elements.trackerEditorEditSpentTime.value = tracker.spentTime;
+	}
+
+	static hideTrackerEditor() {
+		hideElement(elements.trackerEditor);
+		GUI.setScrollEnabled(true);
 	}
 
 	static trackerEditorNameUpdate() {
@@ -205,7 +211,7 @@ class GUI {
 
 	static trackerEditorDeleteConfirm() {
 		Data.deleteTracker(elements.trackerEditorId.value);
-		hideElement(elements.trackerEditor);
+		GUI.hideTrackerEditor();
 		showElement(elements.trackerEditorButtonsMain);
 		hideElement(elements.trackerEditorButtonsDelete);
 
@@ -231,7 +237,7 @@ class GUI {
 
 		Data.write();
 
-		hideElement(elements.trackerEditor);
+		GUI.hideTrackerEditor();
 
 		render();
 	}
@@ -241,7 +247,7 @@ class GUI {
 			GUI.trackerEditorDeleteConfirm();
 		}
 		else {
-			hideElement(elements.trackerEditor);
+			GUI.hideTrackerEditor();
 		}
 	}
 
@@ -251,6 +257,19 @@ class GUI {
 		}
 		else {
 			hideElement(elements.about);
+		}
+
+		GUI.setScrollEnabled(!show);
+	}
+
+	static setScrollEnabled(enabled) {
+		if(enabled != false) {
+			document.documentElement.style.overflowY = 'auto';
+			document.body.style.overflowY = 'auto';
+		}
+		else {
+			document.documentElement.style.overflowY = 'hidden';
+			document.body.style.overflowY = 'hidden';
 		}
 	}
 }
