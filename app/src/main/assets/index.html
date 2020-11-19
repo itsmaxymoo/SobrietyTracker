@@ -185,8 +185,63 @@
 						</p>
 					</div>
 
+					<div class="has-text-centered">
+						<button class="button is-light" onclick="GUI.aboutChangePin();">Change PIN</button>
+					</div>
+
 					<div class="has-text-centered mt-4">
 						<i class="las la-times-circle la-3x" onclick="GUI.showAbout(false);"></i>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<div class="modal modal-fullscreen is-active starts-hidden" id="pin">
+			<div class="modal-background"></div>
+			<div class="modal-card modal-fullscreen">
+				<section class="modal-card-body">
+					<h1 class="is-size-2 has-text-centered app-title">Enter PIN</h1>
+					<p class="has-text-centered is-size-3 mt-6" id="pin-display">
+						<span id="pin-display-1">&#9675;</span>
+						<span id="pin-display-2">&#9675;</span>
+						<span id="pin-display-3">&#9675;</span>
+						<span id="pin-display-4">&#9675;</span>
+					</p>
+					<data id="pin-entered" value=""></data>
+					<data id="pin-clearing" value=false></data>
+
+					<div class="columns is-centered is-gapless">
+						<div class="column is-full-mobile is-4-tablet is-full-touch is-3-desktop is-3-widescreen is-3-fullhd">
+							<div class="columns mt-6 is-centered has-text-centered is-size-2 is-gapless is-multiline is-mobile">
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(1);">
+									1
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(2);">
+									2
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(3);">
+									3
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(4);">
+									4
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(5);">
+									5
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(6);">
+									6
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(7);">
+									7
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(8);">
+									8
+								</div>
+								<div class="column is-one-third pin-key" onclick="GUI.pinKey(9);">
+									9
+								</div>
+							</div>
+						</div>
 					</div>
 				</section>
 			</div>

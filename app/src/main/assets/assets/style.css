@@ -44,3 +44,13 @@ body {
 .text-no-line-break {
 	white-space: nowrap;
 }
+
+.modal-fullscreen {
+	height: 100% !important;
+	max-height: 100% !important;
+	width: 100% !important;
+}
+
+.pin-key {
+	background: radial-gradient(circle, rgba(250,250,250,1) 0%, rgba(255,255,255,0) 60%);
+}

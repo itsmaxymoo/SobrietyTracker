@@ -164,9 +164,12 @@ class Data{
 	};
 
 	static trackers = [];
+	static pin = null;
 
 	static load() {
 		if(typeof(Storage) == 'undefined') return false;
+
+		Data.pin = localStorage.getItem('pin');
 
 		Data.trackers = JSON.parse(localStorage.getItem('trackers'));
 		if(Data.trackers === null) Data.trackers = [];
@@ -180,6 +183,7 @@ class Data{
 	}
 
 	static write() {
+		localStorage.setItem('pin', Data.pin);
 		localStorage.setItem('trackers', JSON.stringify(Data.trackers));
 	}
 

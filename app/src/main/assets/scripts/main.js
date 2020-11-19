@@ -15,6 +15,10 @@ class elements {
 	static trackerEditorButtonsMain;
 	static trackedEditorButtonsDelete;
 	static about;
+	static pin;
+	static pinDisplay;
+	static pinPosition;
+	static pinClearing;
 }
 
 // Run once on app startup.
@@ -36,6 +40,10 @@ window.onload = function() {
 	elements.trackerEditorButtonsMain = document.getElementById('tracker-editor-buttons-main');
 	elements.trackerEditorButtonsDelete = document.getElementById('tracker-editor-buttons-delete');
 	elements.about = document.getElementById('about');
+	elements.pin = document.getElementById('pin');
+	elements.pinDisplay = document.getElementById('pin-display');
+	elements.pinEntered = document.getElementById('pin-entered');
+	elements.pinClearing = document.getElementById('pin-clearing');
 
 	// Constructor tracker editor type dropdown.
 	for(key in Data.trackerProfiles){
@@ -47,6 +55,8 @@ window.onload = function() {
 	elements.trackerEditorTypeIcon.className = Data.trackerProfiles[Object.keys(Data.trackerProfiles)[0]].icon;
 
 	render();
+
+	GUI.showPin(true);
 
 	// Initial load done, fade in.
 	document.body.style.opacity = 1;
@@ -260,6 +270,64 @@ class GUI {
 		}
 
 		GUI.setScrollEnabled(!show);
+	}
+
+	static aboutChangePin() {
+		Data.pin = 'null';
+		Data.write();
+		GUI.showAbout(false);
+		GUI.showPin(true);
+	}
+
+	static showPin(show) {
+		if(show) {
+			showElement(elements.pin);
+		}
+		else {
+			hideElement(elements.pin);
+		}
+
+		GUI.setScrollEnabled(!show);
+	}
+
+	static pinKey(num) {
+		if(elements.pinClearing.value == 'false') {
+			var pos = elements.pinEntered.value.length;
+			elements.pinEntered.value += ('' + num);
+
+			if(pos < 3){
+				document.getElementById('pin-display-' + (pos + 1)).innerHTML = '&#9679';
+			}
+			else {
+				document.getElementById('pin-display-4').innerHTML = '&#9679';
+				elements.pinClearing.value = true;
+	
+				if(Data.pin != null && Data.pin != 'null'){
+					var epin = elements.pinEntered.value;
+	
+					if(epin == Data.pin) {
+						GUI.showPin(false);
+					}
+					else {
+						//wrong
+					}
+				}
+				else {
+					Data.pin = elements.pinEntered.value;
+					Data.write();
+					GUI.showPin(false);
+				}
+	
+				elements.pinEntered.value = '';
+				setTimeout(function(){
+					for(var i = 1; i <= 4; i++) {
+						document.getElementById('pin-display-' + i).innerHTML = '&#9675;';
+					}
+
+					elements.pinClearing.value = false;
+				}, 500);
+			}
+		}
 	}
 
 	static setScrollEnabled(enabled) {
