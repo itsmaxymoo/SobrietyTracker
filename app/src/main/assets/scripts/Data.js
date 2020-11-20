@@ -75,7 +75,7 @@ class Tracker {
 		if(breakpoint === undefined) breakpoint = {name: 'Hour'};
 
 		// Add "s" to plural numbers.
-		hours = (Math.round(hours * 10) / 10);
+		hours = (Math.floor(hours * 10) / 10);
 		if(hours != 1) breakpoint.name += 's';
 
 		return hours + ' ' + breakpoint.name;

@@ -4,6 +4,7 @@ class elements {
 	static trackerContainer;
 	static trackerEditor;
 	static trackerEditorId;
+	static trackerEditorIsNew;
 	static trackerEditorTitle;
 	static trackerEditorEditName;
 	static trackerEditorEditType;
@@ -29,6 +30,7 @@ window.onload = function() {
 	elements.trackerContainer = document.getElementById('tracker-container');
 	elements.trackerEditor = document.getElementById('tracker-editor');
 	elements.trackerEditorId = document.getElementById('tracker-editor-id');
+	elements.trackerEditorIsNew = document.getElementById('tracker-editor-is-new');
 	elements.trackerEditorTitle = document.getElementById('tracker-editor-title');
 	elements.trackerEditorEditName = document.getElementById('tracker-editor-edit-name');
 	elements.trackerEditorEditType = document.getElementById('tracker-editor-edit-type');
@@ -152,7 +154,7 @@ class GUI {
 	static createNewTracker() {
 		var trackerId = Data.createNewTracker();
 
-		GUI.loadTrackerEditor(trackerId);
+		GUI.loadTrackerEditor(trackerId, true);
 
 		GUI.trackerEditorTypeIconUpdate();
 	}
@@ -167,8 +169,9 @@ class GUI {
 		return false;
 	}
 
-	static loadTrackerEditor(trackerId) {
+	static loadTrackerEditor(trackerId, newTracker = false) {
 		elements.trackerEditorId.value = trackerId;
+		elements.trackerEditorIsNew.value = newTracker;
 		var tracker = Data.trackers[trackerId];
 		showElement(elements.trackerEditor);
 		GUI.setScrollEnabled(false);
@@ -253,7 +256,7 @@ class GUI {
 	}
 
 	static trackerEditorCancel() {
-		if(elements.trackerEditorEditName.value == 'New Addiction') {
+		if(elements.trackerEditorIsNew.value == 'true') {
 			GUI.trackerEditorDeleteConfirm();
 		}
 		else {
