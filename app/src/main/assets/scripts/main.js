@@ -311,9 +311,6 @@ class GUI {
 					if(epin == Data.pin) {
 						GUI.showPin(false);
 					}
-					else {
-						//wrong
-					}
 				}
 				else {
 					Data.pin = elements.pinEntered.value;
