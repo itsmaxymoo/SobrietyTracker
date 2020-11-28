@@ -1,16 +1,26 @@
+class Goal {
+	constructor(goalHours, lastGoalHours, divideBy, timeUnit) {
+		this._goalHours = goalHours;
+		this._lastGoalHours = lastGoalHours;
+		this._divideBy = divideBy;
+		this._timeUnit = timeUnit;
+	}
+
+	get goalHours() { return this._goalHours; }
+	get lastGoalHours() { return this._lastGoalHours; }
+	get divideBy() { return this._divideBy; }
+	get timeUnit() { return this._timeUnit; }
+}
+
 class TrackerProfile {
-	constructor(name, icon){
+	constructor(name, icon) {
 		this._name = name;
 		this._icon = icon;
 	}
 
-	get name(){
-		return this._name;
-	}
+	get name() { return this._name; }
 
-	get icon(){
-		return this._icon;
-	}
+	get icon() { return this._icon; }
 }
 
 class Tracker {
@@ -162,6 +172,20 @@ class Data{
 		'socialmedia': new TrackerProfile('Social Media', 'las la-hashtag'),
 		'other': new TrackerProfile('Other', 'las la-exclamation')
 	};
+
+	static goals = [
+		new Goal(6,		0,		1,		'Hour'),	// 6 hours
+		new Goal(12,	6,		1,		'Hour'),	// 12 hours
+		new Goal(24,	12,		1,		'Hour'),	// 24 hours
+		new Goal(48,	24,		1,		'Hour'),	// 48 hours
+		new Goal(168,	48,		24,		'Day'),		// 7 days
+		new Goal(336,	168,	24,		'Day'),		// 14 days
+		new Goal(672,	336,	168,	'Week'),	// 4 weeks
+		new Goal(1344,	672,	168,	'Week'),	// 8 weeks
+		new Goal(2922,	1344,	730.5,	'Month'),	// 4 months
+		new Goal(5844,	2922,	730.5,	'Month'),	// 8 months
+		new Goal(8766,	5844,	730.5,	'Month')	// 12 months
+	];
 
 	static trackers = [];
 	static pin = null;
