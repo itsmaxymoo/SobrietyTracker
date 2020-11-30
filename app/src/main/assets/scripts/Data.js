@@ -1,4 +1,37 @@
 class Goal {
+	static goals = [
+		new Goal(6,			0,		1,		'Hour'),	// 6 hours
+		new Goal(12,		6,		1,		'Hour'),	// 12 hours
+		new Goal(24,		12,		1,		'Hour'),	// 24 hours
+		new Goal(48,		24,		1,		'Hour'),	// 48 hours
+		new Goal(168,		48,		24,		'Day'),		// 7 days
+		new Goal(336,		168,	24,		'Day'),		// 14 days
+		new Goal(672,		336,	168,	'Week'),	// 4 weeks
+		new Goal(1344,		672,	168,	'Week'),	// 8 weeks
+		new Goal(2922,		1344,	730.5,	'Month'),	// 4 months
+		new Goal(5844,		2922,	730.5,	'Month'),	// 8 months
+		new Goal(8766,		5844,	730.5,	'Month'),	// 12 months
+		new Goal(13149,		8766,	730.5,	'Month'),	// 18 months
+		new Goal(17532,		13149,	730.5,	'Month'),	// 24 months
+		new Goal(21915,		17532,	730.5,	'Month'),	// 30 months
+		new Goal(26298,		21915,	730.5,	'Month'),	// 36 months
+		new Goal(35040,		26298,	8760,	'Year'),	// 4 years
+		new Goal(43800,		35040,	8760,	'Year'),	// 5 years
+		new Goal(87600,		43800,	8760,	'Year'),	// 10 years
+		new Goal(175200,	87600,	8760,	'Year'),	// 20 years
+		new Goal(8760000,	175200,	8760,	'Year')		// forever
+	];
+
+	static getGoal(hours) {
+		if(hours <= 0) hours = 0.1; // Ensure hours are > 0.
+
+		for(var i = Goal.goals.length - 1; i >= 1; i--) {
+			if (hours > Goal.goals[i].lastGoalHours) return Goal.goals[i];
+		}
+
+		return Goal.goals[0];
+	}
+
 	constructor(goalHours, lastGoalHours, divideBy, timeUnit) {
 		this._goalHours = goalHours;
 		this._lastGoalHours = lastGoalHours;
@@ -30,6 +63,7 @@ class Tracker {
 		this.date = date;
 		this.spentMoney = spentMoney;
 		this.spentTime = spentTime;
+		this.goal = Goal.goals[Goal.goals.length - 1];
 	}
 
 	static html2Date(date, time) {
@@ -63,32 +97,14 @@ class Tracker {
 		];
 	}
 
-	static hoursToTimeString(hours) {
-		var breakpoints = [
-			{hr: 24, name: 'Day'},
-			{hr: 168, name: 'Week'},
-			{hr: 730.5, name: 'Month'}
-		];
+	static formatTime(hours) {
+		var g = Goal.getGoal(hours);
+		var unit = g.timeUnit;
 
-		var breakpoint;
+		hours = Math.floor(hours / g.divideBy * 10) / 10;
+		if(hours != 1) unit += "s";
 
-		for(var b in breakpoints.reverse()) {
-			if(hours >= breakpoints[b].hr) {
-				hours /= breakpoints[b].hr;
-				breakpoint = breakpoints[b];
-
-				break;
-			}
-		}
-
-		// If the breakpoint is null, the elapsed time is less than 1 day and shouldn't be divided.
-		if(breakpoint === undefined) breakpoint = {name: 'Hour'};
-
-		// Add "s" to plural numbers.
-		hours = (Math.floor(hours * 10) / 10);
-		if(hours != 1) breakpoint.name += 's';
-
-		return hours + ' ' + breakpoint.name;
+		return hours + " " + unit;
 	}
 
 	static getHoursFromStart(tracker) {
@@ -96,45 +112,27 @@ class Tracker {
 	}
 
 	static getSoberTime(tracker) {
-		return Tracker.hoursToTimeString(Tracker.getHoursFromStart(tracker));
-	}
-
-	static getNextGoal(tracker) {
-		var goals = [
-			6,
-			12,
-			24,
-			72,
-			168,
-			336,
-			730.5,
-			1461,
-			2191.5,
-			4383,
-			8766,
-			17532,
-			87660,
-			Number.MAX_SAFE_INTEGER
-		];
-
-		var soberHours = Tracker.getHoursFromStart(tracker);
-		var goal = goals[0];
-
-		for(var g = 0; g < goals.length; g++) {
-			if(soberHours < goals[g]) break;
-
-			goal = goals[g + 1];
-		}
-
-		return goal;
+		return Tracker.formatTime(
+			Tracker.getHoursFromStart(tracker)
+		);
 	}
 
 	static getNextGoalString(tracker) {
-		return Tracker.hoursToTimeString(Tracker.getNextGoal(tracker));
+		return Tracker.formatTime(
+			Goal.getGoal(
+				Tracker.getHoursFromStart(tracker)
+			)
+			.goalHours
+		);
 	}
 
 	static getGoalProgress(tracker) {
-		return 1.0 * Tracker.getHoursFromStart(tracker) / Tracker.getNextGoal(tracker);
+		var g = tracker.goal;
+		return 1.0 * (
+			Tracker.getHoursFromStart(tracker) - g.lastGoalHours
+		) / (
+			g.goalHours - g.lastGoalHours
+		);
 	}
 
 	static getSpentTotal(tracker, number) {
@@ -172,20 +170,6 @@ class Data{
 		'socialmedia': new TrackerProfile('Social Media', 'las la-hashtag'),
 		'other': new TrackerProfile('Other', 'las la-exclamation')
 	};
-
-	static goals = [
-		new Goal(6,		0,		1,		'Hour'),	// 6 hours
-		new Goal(12,	6,		1,		'Hour'),	// 12 hours
-		new Goal(24,	12,		1,		'Hour'),	// 24 hours
-		new Goal(48,	24,		1,		'Hour'),	// 48 hours
-		new Goal(168,	48,		24,		'Day'),		// 7 days
-		new Goal(336,	168,	24,		'Day'),		// 14 days
-		new Goal(672,	336,	168,	'Week'),	// 4 weeks
-		new Goal(1344,	672,	168,	'Week'),	// 8 weeks
-		new Goal(2922,	1344,	730.5,	'Month'),	// 4 months
-		new Goal(5844,	2922,	730.5,	'Month'),	// 8 months
-		new Goal(8766,	5844,	730.5,	'Month')	// 12 months
-	];
 
 	static trackers = [];
 	static pin = null;

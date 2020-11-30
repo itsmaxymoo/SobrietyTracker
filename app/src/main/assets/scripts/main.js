@@ -70,6 +70,15 @@ function render() {
 
 	Data.load();
 
+	// Update each tracker's goal object
+	for(var i = 0; i < Data.trackers.length; i++) {
+		Data.trackers[i].goal = Goal.getGoal(
+			Tracker.getHoursFromStart(
+				Data.trackers[i]
+			)
+		);
+	}
+
 	if(Data.trackers.length > 0) {
 		hideElement(elements.emptyStartMessage);
 
