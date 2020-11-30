@@ -57,17 +57,19 @@ class TrackerProfile {
 }
 
 class Tracker {
-	constructor(name = 'New Addiction', profile = 'other', date = new Date(), spentMoney = 0, spentTime = 0) {
+	constructor(name = 'New Addiction', profile = 'other', date = new Date(), spentMoney = 0, spentTime = 0, isTryptamine = false) {
 		this.name = name;
 		this.profile = profile;
 		this.date = date;
 		this.spentMoney = spentMoney;
 		this.spentTime = spentTime;
+		this.isTryptamine = isTryptamine;
+
 		this.goal = Goal.goals[Goal.goals.length - 1];
 	}
 
 	static html2Date(date, time) {
-		date = new Date(date + " " + time);
+		date = new Date(date + ' ' + time);
 		var now = new Date();
 
 		if(date instanceof Date && !isNaN(date) && date <= now && date.getFullYear() >= 1900) {
@@ -102,9 +104,9 @@ class Tracker {
 		var unit = g.timeUnit;
 
 		hours = Math.floor(hours / g.divideBy * 10) / 10;
-		if(hours != 1) unit += "s";
+		if(hours != 1) unit += 's';
 
-		return hours + " " + unit;
+		return hours + ' ' + unit;
 	}
 
 	static getHoursFromStart(tracker) {
@@ -153,11 +155,22 @@ class Tracker {
 	}
 
 	static getSpentTime(tracker) {
-		return Tracker.hoursToTimeString(Tracker.getSpentTotal(tracker, tracker.spentTime));
+		return Tracker.formatTime(Tracker.getSpentTotal(tracker, tracker.spentTime));
+	}
+
+	static getTryptamineTolerance(tracker) {
+		var days = Tracker.getHoursFromStart(tracker) / 24;
+
+		return Math.floor(
+			Math.max(
+				100,
+				280.059565 * Math.pow(days, -0.412565956)
+			) * 100
+		) / 100 + '%';
 	}
 }
 
-class Data{
+class Data {
 	static trackerProfiles = {
 		'alc': new TrackerProfile('Alcohol', 'las la-wine-bottle'),
 		'nic': new TrackerProfile('Nicotine', 'las la-smoking'),

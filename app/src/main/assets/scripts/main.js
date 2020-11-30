@@ -11,8 +11,9 @@ class elements {
 	static trackerEditorTypeIcon;
 	static trackerEditorEditDate;
 	static trackerEditorEditDateTime;
-	static trackerEditorEditSpentMoney
-	static trackerEditorEditSpentTime
+	static trackerEditorEditSpentMoney;
+	static trackerEditorEditSpentTime;
+	static trackerEditorEditIsTryptamine;
 	static trackerEditorButtonsMain;
 	static trackedEditorButtonsDelete;
 	static about;
@@ -39,6 +40,7 @@ window.onload = function() {
 	elements.trackerEditorEditDateTime = document.getElementById('tracker-editor-edit-date-time');
 	elements.trackerEditorEditSpentMoney = document.getElementById('tracker-editor-edit-spent-money');
 	elements.trackerEditorEditSpentTime = document.getElementById('tracker-editor-edit-spent-time');
+	elements.trackerEditorEditIsTryptamine = document.getElementById('tracker-editor-edit-is-tryptamine');
 	elements.trackerEditorButtonsMain = document.getElementById('tracker-editor-buttons-main');
 	elements.trackerEditorButtonsDelete = document.getElementById('tracker-editor-buttons-delete');
 	elements.about = document.getElementById('about');
@@ -100,7 +102,7 @@ function render() {
 					<p class="has-text-centered has-text-grey mt-0 pt-0 is-size-4">Next goal: ${Tracker.getNextGoalString(tracker)}</p>
 			`;
 
-			if(tracker.spentMoney + tracker.spentTime > 0) {
+			if(tracker.spentMoney + tracker.spentTime > 0 || tracker.isTryptamine) {
 				html += `
 					<div class="box">
 				`;
@@ -122,6 +124,17 @@ function render() {
 							<label class="label">Time Saved</label>
 							<div class="control">
 								<span class="is-size-4">${Tracker.getSpentTime(tracker)}</span>
+							</div>
+						</div>
+					`;
+				}
+
+				if(tracker.isTryptamine == true) {
+					html += `
+						<div class="field">
+							<label class="label">Tryptamine Tolerance</label>
+							<div class="control">
+								<span class="is-size-4">${Tracker.getTryptamineTolerance(tracker)}</span>
 							</div>
 						</div>
 					`;
@@ -193,6 +206,7 @@ class GUI {
 		elements.trackerEditorEditDateTime.value = Tracker.date2HTML(tracker.date)[1];
 		elements.trackerEditorEditSpentMoney.value = tracker.spentMoney;
 		elements.trackerEditorEditSpentTime.value = tracker.spentTime;
+		elements.trackerEditorEditIsTryptamine.checked = tracker.isTryptamine;
 	}
 
 	static hideTrackerEditor() {
@@ -256,6 +270,7 @@ class GUI {
 		);
 		tracker.spentMoney = elements.trackerEditorEditSpentMoney.value;
 		tracker.spentTime = elements.trackerEditorEditSpentTime.value;
+		tracker.isTryptamine = elements.trackerEditorEditIsTryptamine.checked;
 
 		Data.write();
 
