@@ -193,7 +193,7 @@ class Data {
 		Data.pin = localStorage.getItem('pin');
 
 		Data.trackers = JSON.parse(localStorage.getItem('trackers'));
-		if(Data.trackers === null) Data.trackers = [];
+		if(Data.trackers == null) Data.trackers = [];
 
 		// When we load the trackers, their dates are strings, and must be converted to Dates.
 		for(var i = 0; i < Data.trackers.length; i++) {

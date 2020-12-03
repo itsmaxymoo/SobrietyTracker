@@ -18,6 +18,7 @@ class elements {
 	static trackedEditorButtonsDelete;
 	static about;
 	static pin;
+	static pinTitle;
 	static pinDisplay;
 	static pinPosition;
 	static pinClearing;
@@ -45,6 +46,7 @@ window.onload = function() {
 	elements.trackerEditorButtonsDelete = document.getElementById('tracker-editor-buttons-delete');
 	elements.about = document.getElementById('about');
 	elements.pin = document.getElementById('pin');
+	elements.pinTitle = document.getElementById('pin-title');
 	elements.pinDisplay = document.getElementById('pin-display');
 	elements.pinEntered = document.getElementById('pin-entered');
 	elements.pinClearing = document.getElementById('pin-clearing');
@@ -308,6 +310,7 @@ class GUI {
 
 	static showPin(show) {
 		if(show) {
+			elements.pinTitle.innerHTML = (Data.pin == 'null' || Data.pin == null) ? 'Set PIN' : 'Enter PIN';
 			showElement(elements.pin);
 		}
 		else {
