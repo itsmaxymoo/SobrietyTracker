@@ -1,6 +1,7 @@
 # Sobriety Tracker
 
 An Android app to help count the time sober from any addiction.
+[Get it at Google Play](https://play.google.com/store/apps/details?id=io.itsmaxymoo.sobrietytracker).
 
 # About
 
