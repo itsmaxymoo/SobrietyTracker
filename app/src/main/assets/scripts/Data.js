@@ -9,7 +9,7 @@ class Goal {
 		new Goal(336,		168,	24,		'Day'),		// 14 days
 		new Goal(672,		336,	168,	'Week'),	// 4 weeks
 		new Goal(1344,		672,	168,	'Week'),	// 8 weeks
-		new Goal(2922,		1344,	672,	'Month'),	// 4 months
+		new Goal(2922,		1344,	730.5,	'Month'),	// 4 months
 		new Goal(5844,		2922,	730.5,	'Month'),	// 8 months
 		new Goal(8766,		5844,	730.5,	'Month'),	// 12 months
 		new Goal(13149,		8766,	730.5,	'Month'),	// 18 months
